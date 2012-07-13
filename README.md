@@ -12,7 +12,7 @@ NodeJS module for connecting to the Adobe Digital Marketing APIs. Provides both 
 **Implementation**:
 
 ```javascript
-var admClient = require('node-adm-api');
+var client = require('node-adm-api');
 
 // configuration values
 var config = {
