@@ -37,6 +37,7 @@ client.rest('Company.GetEndpoint', args,
         }
 
         console.log(response);
+    }
 );
 
 // perform a SOAP service call
@@ -49,5 +50,6 @@ client.soap('Company.GetEndpoint', args,
         }
 
         console.log(response);
+    }
 );
 ```
