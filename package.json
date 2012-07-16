@@ -5,7 +5,7 @@
   "author": "Gary Rogers <garogers@adobe.com>",
   "dependencies": {
     "shred": "0.8.3",
-    "soap": "http://git.io/j15S_w",
+    "soap": "https://github.com/Adobe-Digital-Marketing/node-soap/tarball/master",
     "underscore.string": "2.2.x"
   },
   "engine": "node 0.6.18"
