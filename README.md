@@ -1,4 +1,4 @@
-node-adm-api
+adobe-digital-marketing-node-sdk
 ===============
 
 NodeJS module for connecting to the Adobe Digital Marketing APIs. Provides both the REST (default) and SOAP clients.
@@ -7,12 +7,12 @@ NodeJS module for connecting to the Adobe Digital Marketing APIs. Provides both 
 
 **npm package**
 
-    npm install https://github.com/Adobe-Digital-Marketing/node-adm-api/tarball/master
+    npm install https://github.com/Adobe-Digital-Marketing/adobe-digital-marketing-node-sdk/tarball/master
 
 **Implementation**:
 
 ```javascript
-var client = require('node-adm-api');
+var client = require('adobe-digital-marketing-node-sdk');
 
 // configuration values
 var config = {
