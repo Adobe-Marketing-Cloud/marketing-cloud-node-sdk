@@ -5,8 +5,8 @@
   "author": "Gary Rogers <garogers@adobe.com>",
   "dependencies": {
     "shred": "0.8.3",
-    "soap": "git://github.com/Adobe-Digital-Marketing/node-soap.git#master",
-  	"underscore.string": "2.2.x"
+    "soap": "https://github.com/Adobe-Digital-Marketing/adobe-digital-marketing-node-sdk/tarball/master",
+    "underscore.string": "2.2.x"
   },
   "engine": "node 0.6.18"
 }
