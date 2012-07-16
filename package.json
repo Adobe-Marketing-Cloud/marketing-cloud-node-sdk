@@ -1,5 +1,5 @@
 {
-  "name": "adobe-digital-marketing-node-sdk".
+  "name": "adobe-digital-marketing-node-sdk",
   "version": "0.2.0",
   "description": "NodeJS module for connecting to the Adobe Digital Marketing APIs. Provides both the REST (default) and SOAP clients",
   "author": "Gary Rogers <garogers@adobe.com>",
