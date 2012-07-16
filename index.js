@@ -38,12 +38,11 @@ var config = function(config) {
 
 var rest = function(method, args, callback) {
 	adm_rest_client.call(method, args, function(err, result) {
+		callback(err, result.content.data);
 
 		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL) > 0 ) {
 			console.log(getLogMessage(method, args, result.content.data, 'json'));
 		}
-
-		callback(err, result.content.data);
 	});
 };
 
@@ -52,12 +51,11 @@ var soap = function(method, args, callback) {
 	var _req = req;
 
 	adm_soap_client.call(method, args, function(err, result, body, xml) {
+		callback(err, result);
 
 		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL) > 0 && body) {
 			console.log(getLogMessage(method, libHttp.getData(), body, 'xml'));
 		}
-
-		callback(err, result);
 	});
 };
 
