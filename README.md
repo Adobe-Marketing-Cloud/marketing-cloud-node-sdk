@@ -7,7 +7,7 @@ NodeJS module for connecting to the Adobe Digital Marketing APIs. Provides both 
 
 **npm package**
 
-    npm install https://github.com/Adobe-Digital-Marketing/adobe-digital-marketing-node-sdk/tarball/master
+    npm install http://git.io/j15S_w
 
 **Implementation**:
 
