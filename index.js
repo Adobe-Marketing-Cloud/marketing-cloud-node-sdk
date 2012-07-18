@@ -12,13 +12,21 @@ var clc = require('cli-color');
 var libHttp = require('./lib/http');
 libHttp.request(http);
 
-var getLogMessage = function(message, request, response, inputType) {
+var _config = {};
+
+var getLogMessage = function(uri, message, statusCode, request, response, inputType) {
+
+	//console.log(uri);
 
 	var _req = "\n" + clc.blue(S('-').repeat(60).s) + "\n";
 	_req += clc.blue("*") + clc.cyan(" SERVER REQUEST [" + clc.red(message) + "]") + "\n";
+	_req += clc.blue("*") + clc.cyan(" URL: ") + uri + "\n";
+	_req += clc.blue(S('-').repeat(60).s) + "\n";
 
 	var _res = clc.blue(S('-').repeat(60).s) + "\n";
 	_res += clc.blue("*") + clc.cyan(" SERVER RESPONSE [" + clc.red(message) + "]") + "\n";
+	_res += clc.blue("*") + clc.cyan(" STATUS CODE: ") + statusCode + "\n";
+	_res += clc.blue(S('-').repeat(60).s) + "\n";
 
 	if(inputType == 'json') {
 		_req += util.inspect(request, null, null, true) + "\n";
@@ -33,23 +41,26 @@ var getLogMessage = function(message, request, response, inputType) {
 
 var config = function(config) {
 	// hack to quickly clone the object
-	var _config = JSON.parse(JSON.stringify(config));
+	var _c = JSON.parse(JSON.stringify(config));
 
 	// append username and company for api auth
-	if(!_config.username.match('/:/')) {
-		_config.username = _config.username + ':' + _config.company;
+	if(!_c.username.match('/:/')) {
+		_c.username = _c.username + ':' + _c.company;
 	}
 
-	adm_rest_client.config(_config);
-	adm_soap_client.config(_config);
+	_config = _c;
+
+	adm_rest_client.config(_c);
+	adm_soap_client.config(_c);
 };
 
 var rest = function(method, args, callback) {
 	adm_rest_client.call(method, args, function(err, result) {
 		callback(err, result.content.data);
-
 		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL) > 0 ) {
-			console.log(getLogMessage(method, args, result.content.data, 'json'));
+			var uri = _config.api_endpoint + 'rest.html?method=' + method;
+			var statusCode = result.status || 200;
+			console.log(getLogMessage(uri, method, statusCode.toString(), args, result.content.data, 'json'));
 		}
 	});
 };
@@ -58,11 +69,11 @@ var soap = function(method, args, callback) {
 
 	var _req = req;
 
-	adm_soap_client.call(method, args, function(err, result, body, xml) {
+	adm_soap_client.call(method, args, function(err, result, body) {
 		callback(err, result);
-
 		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL) > 0 && body) {
-			console.log(getLogMessage(method, libHttp.getData(), body, 'xml'));
+			var statusCode = result.statusCode || '200';
+			console.log(getLogMessage(_config.api_endpoint, method, statusCode, libHttp.getData(), body, 'xml'));
 		}
 	});
 };
