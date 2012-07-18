@@ -32,8 +32,16 @@ var getLogMessage = function(message, request, response, inputType) {
 };
 
 var config = function(config) {
-	adm_rest_client.config(config);
-	adm_soap_client.config(config);
+	// hack to quickly clone the object
+	var _config = JSON.parse(JSON.stringify(config));
+
+	// append username and company for api auth
+	if(!_config.username.match('/:/')) {
+		_config.username = _config.username + ':' + _config.company;
+	}
+
+	adm_rest_client.config(_config);
+	adm_soap_client.config(_config);
 };
 
 var rest = function(method, args, callback) {
