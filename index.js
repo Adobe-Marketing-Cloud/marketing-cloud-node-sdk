@@ -30,10 +30,19 @@ var getLogMessage = function(uri, message, statusCode, request, response, inputT
 
 	if(inputType == 'json') {
 		_req += util.inspect(request, null, null, true) + "\n";
-		_res += util.inspect(response, null, null, true) + "\n";
+		if(response instanceof Buffer) {
+			_res += response.toString() + "\n";
+		} else {
+			_res += util.inspect(response, null, null, true) + "\n";
+		}
 	} else {
 		_req += nxmlpp.strPrint(request);
-		_res += nxmlpp.strPrint(response)
+
+		try {
+			_res += nxmlpp.strPrint(response);
+		} catch (e) {
+			_res += response + "\n";
+		}
 	}
 
 	return _req + _res + clc.blue(S('-').repeat(60).s);
