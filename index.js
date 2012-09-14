@@ -53,7 +53,7 @@ var config = function(config) {
 	var _c = JSON.parse(JSON.stringify(config));
 
 	// append username and company for api auth
-	if(!_c.username.match('/:/')) {
+	if(!_c.username.match('/:/') && _c.company) {
 		_c.username = _c.username + ':' + _c.company;
 	}
 
@@ -63,10 +63,15 @@ var config = function(config) {
 	adm_soap_client.config(_c);
 };
 
-var rest = function(method, args, callback) {
+var rest = function(method, args, callback, options) {
+	options = (options) ? options : {};
 	adm_rest_client.call(method, args, function(err, result) {
-		callback(err, result.content.data);
-		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL) > 0 ) {
+		if(options.rawRequest && options.rawRequest === true) {
+			callback(err, result);
+		} else {
+			callback(err, result.content.data);
+		}
+		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL, 10) > 0 ) {
 			var uri = _config.api_endpoint + 'rest.html?method=' + method;
 			var statusCode = result.status || 200;
 			console.log(getLogMessage(uri, method, statusCode.toString(), args, result.content.data, 'json'));
@@ -80,7 +85,7 @@ var soap = function(method, args, callback) {
 
 	adm_soap_client.call(method, args, function(err, result, body) {
 		callback(err, result);
-		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL) > 0 && body) {
+		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL, 10) > 0 && body) {
 			var statusCode = result.statusCode || '200';
 			console.log(getLogMessage(_config.api_endpoint, method, statusCode, libHttp.getData(), body, 'xml'));
 		}
