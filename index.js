@@ -84,12 +84,24 @@ var soap = function(method, args, callback) {
 	var _req = req;
 
 	adm_soap_client.call(method, args, function(err, result, body) {
+		// soap responses are missing spaces between quotations for some reason
+		result = cleanSoapResult(result);
 		callback(err, result);
 		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL, 10) > 0 && body) {
 			var statusCode = result.statusCode || '200';
 			console.log(getLogMessage(_config.api_endpoint, method, statusCode, libHttp.getData(), body, 'xml'));
 		}
 	});
+};
+
+var cleanSoapResult = function(result) {
+	for(var i in result) {
+		if(typeof(result[i]) == 'object') {
+			result[i] = cleanSoapResult(result[i]);
+		}
+		result[i] = (toString.call(result[i]) == '[object String]') ? result[i].replace(/([^\s])(\".*?\")([^\s])/, "$1 $2 $3") : result[i];
+	}
+	return result;
 };
 
 exports.config = config;
