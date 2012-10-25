@@ -1,11 +1,11 @@
 {
-  "name": "adobe-digital-marketing-node-sdk",
+  "name": "marketing-cloud-node-sdk",
   "version": "0.2.2",
-  "description": "NodeJS module for connecting to the Adobe Digital Marketing APIs. Provides both the REST (default) and SOAP clients",
+  "description": "NodeJS module for connecting to the Adobe Marketing Cloud APIs. Provides both the REST (default) and SOAP clients",
   "author": "Gary Rogers <garogers@adobe.com>",
   "dependencies": {
     "shred": "0.8.3",
-    "soap": "https://github.com/Adobe-Digital-Marketing/node-soap/tarball/master",
+    "soap": "https://github.com/Adobe-Marketing-Cloud/node-soap/tarball/master",
     "underscore.string": "2.2.x"
   },
   "engine": "node 0.6.18"

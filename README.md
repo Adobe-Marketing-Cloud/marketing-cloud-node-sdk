@@ -1,18 +1,18 @@
-adobe-digital-marketing-node-sdk
+marketing-cloud-node-sdk
 ===============
 
-NodeJS module for connecting to the Adobe Digital Marketing APIs. Provides both the REST (default) and SOAP clients.
+NodeJS module for connecting to the Adobe Marketing Cloud APIs. Provides both the REST (default) and SOAP clients.
 
 ## Node.js installation ##
 
 **npm package**
 
-    npm install http://git.io/j15S_w
+    npm install https://github.com/Adobe-Marketing-Cloud/marketing-cloud-node-sdk/tarball/master
 
 **Implementation**:
 
 ```javascript
-var client = require('adobe-digital-marketing-node-sdk');
+var client = require('marketing-cloud-node-sdk');
 
 // configuration values
 var config = {
