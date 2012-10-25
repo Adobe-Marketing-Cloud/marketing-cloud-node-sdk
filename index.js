@@ -85,7 +85,9 @@ var soap = function(method, args, callback) {
 
 	adm_soap_client.call(method, args, function(err, result, body) {
 		// soap responses are missing spaces between quotations for some reason
-		result = cleanSoapResult(result);
+		if(!result.statusCode) {
+			result = cleanSoapResult(result);
+		}
 		callback(err, result);
 		if(process.env.API_LOG_LEVEL && parseInt(process.env.API_LOG_LEVEL, 10) > 0 && body) {
 			var statusCode = result.statusCode || '200';
